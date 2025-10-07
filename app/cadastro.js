@@ -1,5 +1,6 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
+import { Picker } from '@react-native-picker/picker';
 import { adicionarCarro } from './data';
 
 let placa = '';
@@ -19,7 +20,19 @@ export default function Cadastro() {
       <Text style={estilos.titulo}>Cadastro de Carros</Text>
 
       <TextInput placeholder="Placa" style={estilos.input} onChangeText={t => (placa = t)} />
-      <TextInput placeholder="Marca" style={estilos.input} onChangeText={t => (marca = t)} />
+
+      <Picker
+        selectedValue={marca}
+        style={estilos.input}
+        onValueChange={(itemValue) => (marca = itemValue)}
+      >
+        <Picker.Item label="Selecione a marca" value="" />
+        <Picker.Item label="Fiat" value="Fiat" />
+        <Picker.Item label="Ford" value="Ford" />
+        <Picker.Item label="Chevrolet" value="Chevrolet" />
+        <Picker.Item label="Volkswagen" value="Volkswagen" />
+      </Picker>
+
       <TextInput placeholder="Modelo" style={estilos.input} onChangeText={t => (modelo = t)} />
       <TextInput placeholder="Valor" style={estilos.input} onChangeText={t => (valor = t)} />
       <TextInput placeholder="Ano" style={estilos.input} onChangeText={t => (ano = t)} />
