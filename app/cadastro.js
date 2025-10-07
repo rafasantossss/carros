@@ -1,30 +1,35 @@
+import { useState } from "react";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Link } from 'expo-router';
 import { Picker } from '@react-native-picker/picker';
 import { adicionarCarro } from './data';
 
-let placa = '';
-let marca = '';
-let modelo = '';
-let valor = '';
-let ano = '';
-
 export default function Cadastro() {
+  const [placa, setPlaca] = useState("");
+  const [marca, setMarca] = useState("");
+  const [modelo, setModelo] = useState("");
+  const [ano, setAno] = useState("");
+  const [valor, setValor] = useState("");
+  const [carregando, setCarregando] = useState(false);
+
   function salvar() {
+    setCarregando(true);
     adicionarCarro({ placa, marca, modelo, valor, ano });
+    setCarregando(false);
     alert('Carro cadastrado com sucesso!');
+    setPlaca(""); setMarca(""); setModelo(""); setAno(""); setValor("");
   }
 
   return (
     <View style={estilos.container}>
       <Text style={estilos.titulo}>Cadastro de Carros</Text>
 
-      <TextInput placeholder="Placa" style={estilos.input} onChangeText={t => (placa = t)} />
+      <TextInput placeholder="Placa" style={estilos.input} value={placa} onChangeText={setPlaca} />
 
       <Picker
         selectedValue={marca}
         style={estilos.input}
-        onValueChange={(itemValue) => (marca = itemValue)}
+        onValueChange={(itemValue) => setMarca(itemValue)}
       >
         <Picker.Item label="Selecione a marca" value="" />
         <Picker.Item label="Fiat" value="Fiat" />
@@ -33,12 +38,12 @@ export default function Cadastro() {
         <Picker.Item label="Volkswagen" value="Volkswagen" />
       </Picker>
 
-      <TextInput placeholder="Modelo" style={estilos.input} onChangeText={t => (modelo = t)} />
-      <TextInput placeholder="Valor" style={estilos.input} onChangeText={t => (valor = t)} />
-      <TextInput placeholder="Ano" style={estilos.input} onChangeText={t => (ano = t)} />
+      <TextInput placeholder="Modelo" style={estilos.input} value={modelo} onChangeText={setModelo} />
+      <TextInput placeholder="Valor" style={estilos.input} value={valor} onChangeText={setValor} />
+      <TextInput placeholder="Ano" style={estilos.input} value={ano} onChangeText={setAno} />
 
       <TouchableOpacity onPress={salvar}>
-        <Text style={estilos.botao}>Salvar</Text>
+        <Text style={estilos.botao}>{carregando ? 'Salvando...' : 'Salvar'}</Text>
       </TouchableOpacity>
 
       <Link href="/">

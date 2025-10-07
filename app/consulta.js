@@ -1,17 +1,24 @@
+import { useState, useEffect } from "react";
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { Link } from 'expo-router';
 import { carros } from './data';
 
 export default function Consulta() {
+  const [listaCarros, setListaCarros] = useState([]);
+
+  useEffect(() => {
+    setListaCarros(carros);
+  }, []);
+
   return (
     <View style={estilos.container}>
       <Text style={estilos.titulo}>Carros Cadastrados</Text>
 
       <ScrollView style={estilos.lista}>
-        {carros.length === 0 ? (
+        {listaCarros.length === 0 ? (
           <Text style={estilos.vazio}>Nenhum carro cadastrado.</Text>
         ) : (
-          carros.map((carro, i) => (
+          listaCarros.map((carro, i) => (
             <View key={i} style={estilos.item}>
               <Text>Placa: {carro.placa}</Text>
               <Text>Marca: {carro.marca}</Text>
